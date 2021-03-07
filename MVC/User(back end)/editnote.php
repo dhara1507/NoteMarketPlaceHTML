@@ -179,16 +179,22 @@ if(isset($_POST['save'])){
                                 value="<?php echo $note_pic; ?>" title="upload a picture" style="height:100px;">
                             </div>
                             <div class="form-group-left">
-                                <label for="exampleInputEmail1"><span class="label">Type</span></label><br>
+                                <label for="exampleInputEmail1"><span class="label">Type*</span></label><br>
                                 <select name="type" class="custom-select form-control user">
-                                    <option  value= "<?php $type; ?>" selected>Select Your note type</option>
+                                    <option value="<?php echo $type1; ?>"><?php echo $type1; ?></option>
                                     <?php
                                     $query="SELECT * FROM notetypes";
                                     $select_type=mysqli_query($conn,$query);
+                                    
                                     while($row=mysqli_fetch_assoc($select_type)){
                                         $note_type=$row['Name'];
                                         $id=$row['ID'];
+                                        if($type1==$note_type){
+                                             echo "";
+                                        }
+                                        else{
                                         echo "<option value='{$id}'>$note_type</option>";
+                                        }
                                     }
                                     
                                     ?>
@@ -205,15 +211,28 @@ if(isset($_POST['save'])){
                             <div class="form-group-right">
                                 <label for="exampleInputEmail1"><span class="label">Category*</span></label><br>
                                 <select name="category" class="custom-select form-control user" value="<?php $category ?>">
-                                    <option selected>Select Your Category</option>
                                     
+                                    <?php
+                                    $query="SELECT * FROM notecategories WHERE ID='{$category}'";
+                                    $result=mysqli_query($conn,$query);
+                                    while($row=mysqli_fetch_assoc($result)){
+                                        $category1=$row['Name'];
+                                    }
+                                    ?>
+                                    <option <?php echo $category1?> ><?php echo $category1?></option>
                                     <?php
                                     $query="SELECT * FROM notecategories";
                                     $result=mysqli_query($conn,$query);
                                     while($row=mysqli_fetch_assoc($result)){
                                         $note_cat=$row['Name'];
                                         $id=$row['ID'];
+                                        if($category1==$note_cat){
+                                            echo "";
+                                            
+                                        }
+                                        else{
                                         echo "<option value='{$id}'>$note_cat</option>";
+                                        }
                                     }
                                     
                                     
@@ -265,9 +284,18 @@ if(isset($_POST['save'])){
 <!--                        <form method="" action="" class="container6">-->
                             <h1 class="user-heading">Institution Information</h1>
                             <div class="form-group-left">
-                                <label for="exampleInputEmail1"><span class="label">Country</span></label><br>
+                                <label for="exampleInputEmail1"><span class="label">Country*</span></label><br>
                                 <select name="country" class="custom-select form-control user">
-                                    <option selected value="<?php echo $country; ?>">Select Your country</option>
+                                   <?php
+                                    $query="SELECT * FROM countries WHERE ID='{$country}'";
+                                    $result=mysqli_query($conn,$query);
+                                    while($row=mysqli_fetch_assoc($result)){
+                                        $country1=$row['Name'];
+                                    }
+                                    
+                                    
+                                    ?>
+                                    <option value="<?php echo $country1; ?>">"<?php echo $country1; ?>"</option>
                                     
                                     
                                     <?php
@@ -276,12 +304,18 @@ if(isset($_POST['save'])){
                                     while($row=mysqli_fetch_assoc($result)){
                                         $country=$row['Name'];
                                         $id=$row['ID'];
+                                        if($country1==$country){
+                                            echo "";
+                                        }
+                                        else{
                                         echo "<option value='{$id}'>$country</option>";
+                                        }
                                     }
                                     
                                     
                                     ?>
                                 </select>
+                                
                             </div>
 <!--                        </form>-->
                     </div>
