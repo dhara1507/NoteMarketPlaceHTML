@@ -179,9 +179,17 @@ if(isset($_POST['save'])){
                                 value="<?php echo $note_pic; ?>" title="upload a picture" style="height:100px;">
                             </div>
                             <div class="form-group-left">
+                                <?php
+                               $query="SELECT * FROM notetypes WHERE ID='{$type}'";
+                               $result=mysqli_query($conn,$query);
+                                while($row=mysqli_fetch_assoc($result)){
+                                    $type1=$row['Name'];
+                                    $id1=$row['ID'];
+                                }
+                               ?>
                                 <label for="exampleInputEmail1"><span class="label">Type*</span></label><br>
                                 <select name="type" class="custom-select form-control user">
-                                    <option value="<?php echo $type1; ?>"><?php echo $type1; ?></option>
+                                     <?php echo "<option value='{$id1}'>$type1</option>"; ?>
                                     <?php
                                     $query="SELECT * FROM notetypes";
                                     $select_type=mysqli_query($conn,$query);
@@ -217,9 +225,10 @@ if(isset($_POST['save'])){
                                     $result=mysqli_query($conn,$query);
                                     while($row=mysqli_fetch_assoc($result)){
                                         $category1=$row['Name'];
+                                        $id_cat=$row['ID'];
                                     }
                                     ?>
-                                    <option <?php echo $category1?> ><?php echo $category1?></option>
+                                    <?php echo "<option value='{$id_cat}'>$category1</option>" ?>
                                     <?php
                                     $query="SELECT * FROM notecategories";
                                     $result=mysqli_query($conn,$query);
@@ -291,11 +300,12 @@ if(isset($_POST['save'])){
                                     $result=mysqli_query($conn,$query);
                                     while($row=mysqli_fetch_assoc($result)){
                                         $country1=$row['Name'];
+                                        $id_coun=$row['ID'];
                                     }
                                     
                                     
                                     ?>
-                                    <option value="<?php echo $country1; ?>">"<?php echo $country1; ?>"</option>
+                                     <?php echo "<option value='{$id_coun}'>$country1</option>"; ?>
                                     
                                     
                                     <?php
