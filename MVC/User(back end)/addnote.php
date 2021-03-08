@@ -46,7 +46,7 @@ session_start();
             var notepre=document.form.note_preview.value;
             var type=document.form.type.value;
             var country=document.form.country.value;
-            if(!title || !category || !upnote || !desc || !selltype || !price || !notepre || !type || !country){
+            if(!title || !category || !upnote || !desc || !selltype || !notepre || !type || !country){
                 
                 alert('enter all required fields');
                 return false;
@@ -123,6 +123,7 @@ session_start();
     
     <?php
     $sell_type='';
+    $price=0;
     if(isset($_POST['save']))
     {
                 $title=$_POST['title'];
@@ -131,7 +132,7 @@ session_start();
                 $category=$_POST['category'];
                 $up_note=$_POST['up_note'];
                 $page=$_POST['pages'];
-               
+                $_SESSION['up-note']=$up_note;
                 $desc=$_POST['description'];
                 $country=$_POST['country'];
                 $inst_name=$_POST['inst_name'];
@@ -139,7 +140,7 @@ session_start();
                 $course_code=$_POST['code'];
                 $prof_name=$_POST['prof_name'];
                 $sell_type=$_POST['gridRadios'];
-                $price=$_POST['sell_price'];
+                
                 $note_preview=$_POST['note_preview'];
                 $id=$_SESSION['id'];
                 $action_by=$_SESSION['firstname'];
@@ -154,6 +155,7 @@ session_start();
                 } 
             }
             else{
+            $price=$_POST['sell_price'];
             $query="INSERT INTO sellernotes(ID,SellerID,Status,ActionedBy,AdminRemarks,PublishedDate,Title,Category,DisplayPicture,NoteType,NumberofPages,Description,UniversityName,Country,Course,CourseCode,Professor,IsPaid,SellingPrice,NotesPreview,CraetedDate,CreatedBy,ModifiedDate,ModifiedBy,IsActive)VALUES('','{$id}','1','{$id}','','','{$title}','{$category}','{$note_pic}','{$type}','{$page}','{$desc}','{$inst_name}','{$country}','{$course_name}','{$course_code}','{$prof_name}',
             '{$sell_type}','{$price}','{$note_preview}','','','','','')";
             $result=mysqli_query($conn,$query);
@@ -162,8 +164,9 @@ session_start();
                 }
             }
     }
+
     if(isset($_POST['yes'])){
-        $title=$_POST['title'];
+                $title=$_POST['title'];
                 $type=$_POST['type'];
                 $note_pic=$_POST['prof_pic'];
                 $category=$_POST['category'];
