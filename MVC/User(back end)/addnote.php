@@ -55,6 +55,17 @@ session_start();
                 return true;
             }
         }
+        
+        function fun(){
+            
+            document.getElementById("price_radio").disabled=true;
+            
+        }
+        function fun1(){
+            
+            document.getElementById("price_radio").disabled=false;
+        }
+        
     </script>
 </head>
 
@@ -111,7 +122,7 @@ session_start();
     
     
     <?php
-    
+    $sell_type='';
     if(isset($_POST['save']))
     {
                 $title=$_POST['title'];
@@ -120,6 +131,7 @@ session_start();
                 $category=$_POST['category'];
                 $up_note=$_POST['up_note'];
                 $page=$_POST['pages'];
+               
                 $desc=$_POST['description'];
                 $country=$_POST['country'];
                 $inst_name=$_POST['inst_name'];
@@ -402,22 +414,23 @@ session_start();
                                     <label for="exampleInputEmail1"><span class="label">Sell For*</span></label>
                                     <div class="form-check radio-left">
                                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="0" checked>
+                                            onclick="fun()" value="0" checked>
                                         <label class="form-check-label label1" for="gridRadios1">
                                             Free
                                         </label>
                                     </div>
                                     <div class="form-check radio-right">
                                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="1" checked>
+                                            onclick="fun1()" value="1" checked>
                                         <label class="form-check-label label1" for="gridRadios1">
                                             Paid
                                         </label>
                                     </div>
                                 </div>
+                                
                                 <label for="exampleInputEmail1" class="sell-price-label"><span class="label">Sell
                                         Price*</span></label>
-                                <input name="sell_price" type="text" class="form-control user sell-price" id="exampleInputEmail1"
+                                <input name="sell_price" type="text" class="form-control user sell-price" id='price_radio'
                                     aria-describedby="emailHelp" placeholder="Enter your price">
                             </div>
 <!--                        </form>-->
@@ -425,12 +438,12 @@ session_start();
                 </div>
                 <div class="col-md-6">
                     <div class="test-user">
-<!--                        <form method="" action="" class="container-right">-->
+
                             <div class="form-group-right addnote-desc">
                                 <label for="exampleFormControlTextarea1"><span class="label">Note Preview*</span></label>
                                 <input type="file" name="note_preview" class="form-control user up-note" id="exampleFormControlTextarea2" title="upload a picture" style="height:170px;width:700px;">
                             </div>
-<!--                        </form>-->
+
                     </div>
                 </div>
             </div>
@@ -459,7 +472,7 @@ session_start();
                    <hr>
                     <h5>"Publishing this note will send mote to administrator for review,once administrator review and approve then this note will be published to poral.pre yes to continue."</h5>
                     <button type="submit" class="btn-userP btn-review" style="margin-top:10px;"
-                                                                 name="yes" value="YES">YES</button>
+                    name="yes" value="YES">YES</button>
                     <button type="submit" class="btn-userP btn-review"
                             name="cancel" style="margin-top:-100px;margin-left:-30px;" value="Cancel">Cancel</button>
                 </div>
