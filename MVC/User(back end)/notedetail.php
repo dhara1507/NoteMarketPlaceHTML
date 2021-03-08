@@ -94,7 +94,7 @@ session_start();
     echo "<section id='note-details'>
         <div class='note'>
             <div class='row'>";
-     $query="SELECT  sellernotes.DisplayPicture,sellernotes.Title,sellernotes.Description,sellernotes.UniversityName,sellernotes.Course,sellernotes.CourseCode,sellernotes.CourseCode,sellernotes.Professor,sellernotes.NumberofPages,notecategories.Name,countries.Name FROM sellernotes LEFT JOIN notecategories ON sellernotes.Category=notecategories.ID LEFT JOIN countries ON sellernotes.Country=countries.ID WHERE sellernotes.ID='{$id}'";
+     $query="SELECT  sellernotes.DisplayPicture,sellernotes.Title,sellernotes.Description,sellernotes.UniversityName,sellernotes.Course,sellernotes.CourseCode,sellernotes.CourseCode,sellernotes.Professor,sellernotes.SellingPrice,sellernotes.NumberofPages,notecategories.Name,countries.Name FROM sellernotes LEFT JOIN notecategories ON sellernotes.Category=notecategories.ID LEFT JOIN countries ON sellernotes.Country=countries.ID WHERE sellernotes.ID='{$id}'";
     $result=mysqli_query($conn,$query);
     while($row=mysqli_fetch_assoc($result)){
         $img=$row['DisplayPicture'];
@@ -107,6 +107,7 @@ session_start();
         $coursecode=$row['CourseCode'];
         $prof=$row['Professor'];
         $page=$row['NumberofPages'];
+        $price=$row['SellingPrice'];
         
         echo "<div class='col-md-6 col-sm-6'>
                     <div class='note1'>
@@ -119,7 +120,7 @@ session_start();
                             <h5>$category</h5>
                             <p>$desc</p>
                             <form action=''  method='post' class='btn-userPro'><input type='submit'
-                                    name='download' class='btn-userP note-btn' value='DOWNLOAD/$15'>
+                                    name='download' class='btn-userP note-btn' value='DOWNLOAD/$$price'>
                             </form>
                         </div>
                     </div>
