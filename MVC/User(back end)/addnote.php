@@ -56,12 +56,14 @@ session_start();
             }
         }
         
-        function fun(){
+        function fun()
+        {
             
             document.getElementById("price_radio").disabled=true;
             
         }
-        function fun1(){
+        function fun1()
+        {
             
             document.getElementById("price_radio").disabled=false;
         }
@@ -142,6 +144,7 @@ session_start();
                 $sell_type=$_POST['gridRadios'];
                 
                 $note_preview=$_POST['note_preview'];
+                $_SESSION['note-preview']=$note_preview;
                 $id=$_SESSION['id'];
                 $action_by=$_SESSION['firstname'];
                 
@@ -189,17 +192,23 @@ session_start();
                 if(!$result){
                     die("FAILED".mysqli_error($conn));
                 }
+            $query="SELECT * FROM users WHERE ID='{$id}'";
+            $result=mysqli_query($conn,$query);
+            while($row=mysqli_fetch_assoc($result)){
+                $firstname=$row['FirstName'];
+                $email=$row['EmailID'];
+            }
             $to="dhara8186@gmail.com";
-             $firstname=$_SESSION['firstname'];
+             
                $subject="$firstname sent his note for review.";
-               $msg="Hello $firstname"."\r\n".
+               $msg="Hello admin"."\r\n".
                    "We Want to inform you that $firstname sent his note $title for review.Plase look at the notes and take required actions."."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n".
 
 
-                    "regards,"."\r\n"
+                    "Regards,"."\r\n"
                     ."Notes Market Place";
 
-               $header=$_SESSION['email'];
+               $header=$email;
 
                if(mail($to,$subject,$msg,$header)){
                     header("Location:addnote.php");
@@ -416,8 +425,9 @@ session_start();
                                 <div class="addnote-radio">
                                     <label for="exampleInputEmail1"><span class="label">Sell For*</span></label>
                                     <div class="form-check radio-left">
+                                       
                                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            onclick="fun()" value="0" checked>
+                                            onclick="fun()" value="0">
                                         <label class="form-check-label label1" for="gridRadios1">
                                             Free
                                         </label>
