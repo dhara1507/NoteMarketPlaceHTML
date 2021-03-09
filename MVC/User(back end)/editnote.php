@@ -1,5 +1,6 @@
 <?php
 include "includes/db.php";
+session_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,6 +34,20 @@ include "includes/db.php";
 
     <!--responsive css-->
     <link rel="stylesheet" href="css/responsive.css">
+    <script type="text/javascript">
+        
+        function fun()
+        {
+            
+            document.getElementById("price_radio").disabled=true;
+            
+        }
+        function fun1()
+        {
+            
+            document.getElementById("price_radio").disabled=false;
+        }
+    </script>   
     </head>
 
 <?php
@@ -48,6 +63,7 @@ while($row=mysqli_fetch_assoc($select_note)){
     $title=$row['Title'];
     $category=$row['Category'];
     $note_pic=$row['DisplayPicture'];
+    
     $type=$row['NoteType'];
     $pages=$row['NumberofPages'];
     $desc=$row['Description'];
@@ -80,15 +96,65 @@ if(isset($_POST['save'])){
                 $sell_type=$_POST['gridRadios'];
                 $price=$_POST['sell_price'];
                 $note_preview=$_POST['note_preview'];
-            $query="UPDATE sellernotes SET Title ='{$title}',Category='{$category}', DisplayPicture='{$up_note}', NoteType='{$type}', NumberofPages='{$page}', Description='{$desc}', UniversityName='{$inst_name}', Country='{$country}', Course='{$course_name}', CourseCode='{$course_code}', Professor='{$prof_name}', IsPaid='{$sell_type}', SellingPrice='{$price}', NotesPreview='{$note_preview}' WHERE ID='{$the_note}'";
+            if($sell_type=='1'){
+                 $query="UPDATE sellernotes SET Title ='{$title}',Category='{$category}', DisplayPicture='{$up_note}', NoteType='{$type}', NumberofPages='{$page}', Description='{$desc}', UniversityName='{$inst_name}', Country='{$country}', Course='{$course_name}', CourseCode='{$course_code}', Professor='{$prof_name}', IsPaid='{$sell_type}', SellingPrice='{$price}', NotesPreview='{$note_preview}' WHERE ID='{$the_note}'";
             $update=mysqli_query($conn,$query);
-        
+            }
+        else{
+            $query="UPDATE sellernotes SET Title ='{$title}',Category='{$category}', DisplayPicture='{$up_note}', NoteType='{$type}', NumberofPages='{$page}', Description='{$desc}', UniversityName='{$inst_name}', Country='{$country}', Course='{$course_name}', CourseCode='{$course_code}', Professor='{$prof_name}', IsPaid=0, SellingPrice='{$price}', NotesPreview='{$note_preview}' WHERE ID='{$the_note}'";
+            $update=mysqli_query($conn,$query);
+        }
     
-    if(!$update){
+    if(!$update)
+    {
         die("FAILED".mysqli_error($conn));
     }
 }
+if(isset($_POST['yes'])){
+                $title=$_POST['title'];
+                $type=$_POST['type'];
+                $note_pic=$_POST['prof_pic'];
+                $category=$_POST['category'];
+                $up_note=$_POST['up_note'];
+                $page=$_POST['pages'];
+                $desc=$_POST['description'];
+                $country=$_POST['country'];
+                $inst_name=$_POST['inst_name'];
+                $course_name=$_POST['course_name'];
+                $course_code=$_POST['code'];
+                $prof_name=$_POST['prof_name'];
+                $sell_type=$_POST['gridRadios'];
+                $price=$_POST['sell_price'];
+                $note_preview=$_POST['note_preview'];
+                $id=$_SESSION['id'];
+                $action_by=$_SESSION['firstname'];
+         $query=$query="UPDATE sellernotes SET Status='2',Title ='{$title}',Category='{$category}', DisplayPicture='{$up_note}', NoteType='{$type}', NumberofPages='{$page}', Description='{$desc}', UniversityName='{$inst_name}', Country='{$country}', Course='{$course_name}', CourseCode='{$course_code}', Professor='{$prof_name}', IsPaid=0, SellingPrice='{$price}', NotesPreview='{$note_preview}' WHERE ID='{$the_note}'";
+            $result=mysqli_query($conn,$query);
+                if(!$result){
+                    die("FAILED".mysqli_error($conn));
+                }
+            $query="SELECT * FROM users WHERE ID='{$id}'";
+            $result=mysqli_query($conn,$query);
+            while($row=mysqli_fetch_assoc($result)){
+                $firstname=$row['FirstName'];
+                $email=$row['EmailID'];
+            }
+            $to="dhara8186@gmail.com";
+             
+               $subject="$firstname sent his note for review.";
+               $msg="Hello admin"."\r\n".
+                   "We Want to inform you that $firstname sent his note $title for review.Plase look at the notes and take required actions."."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n".
 
+
+                    "Regards,"."\r\n"
+                    ."Notes Market Place";
+
+               $header=$email;
+
+               if(mail($to,$subject,$msg,$header)){
+                    header("Location:addnote.php");
+               }
+    }
 
 
 
@@ -175,11 +241,14 @@ if(isset($_POST['save'])){
                             <div class="form-group-left">
                                 <label for="exampleFormControlTextarea1"><span class="label">Profile
                                         Picture</span></label>
+                                
+                                <?php echo "<a href='{$note_pic}' download>Attached Image</a>"; ?>
+                                
                                 <input name="prof_pic" type="file" class="form-control user" id="exampleFormControlTextarea1" 
-                                value="<?php echo $note_pic; ?>" title="upload a picture" style="height:100px;">
+                                title="upload a picture" style="height:100px;">
                             </div>
                             <div class="form-group-left">
-                                <?php
+                              <?php
                                $query="SELECT * FROM notetypes WHERE ID='{$type}'";
                                $result=mysqli_query($conn,$query);
                                 while($row=mysqli_fetch_assoc($result)){
@@ -187,9 +256,10 @@ if(isset($_POST['save'])){
                                     $id1=$row['ID'];
                                 }
                                ?>
+                               
                                 <label for="exampleInputEmail1"><span class="label">Type*</span></label><br>
                                 <select name="type" class="custom-select form-control user">
-                                     <?php echo "<option value='{$id1}'>$type1</option>"; ?>
+                                    <?php echo "<option value='{$id1}'>$type1</option>"; ?>
                                     <?php
                                     $query="SELECT * FROM notetypes";
                                     $select_type=mysqli_query($conn,$query);
@@ -227,6 +297,7 @@ if(isset($_POST['save'])){
                                         $category1=$row['Name'];
                                         $id_cat=$row['ID'];
                                     }
+                                    
                                     ?>
                                     <?php echo "<option value='{$id_cat}'>$category1</option>" ?>
                                     <?php
@@ -251,12 +322,9 @@ if(isset($_POST['save'])){
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1"><span class="label up-note-label">Upload
                                         Notes*</span></label>
+                                    
                                         <input type="file" name="up_note" class="form-control user up-note" accept=".pdf" id="exampleFormControlTextarea2" title="upload a note" style="height:100px;width:700px;">
-<!--
-                                <textarea type="picture" class="form-control user up-note"
-                                    id="exampleFormControlTextarea2" placeholder="upload your notes"
-                                    rows="5"></textarea>
--->
+
                             </div>
                             <div class="form-group-right">
                                 <label for="exampleInputEmail1"><span class="label">Number of Pages</span></label>
@@ -293,7 +361,7 @@ if(isset($_POST['save'])){
 <!--                        <form method="" action="" class="container6">-->
                             <h1 class="user-heading">Institution Information</h1>
                             <div class="form-group-left">
-                                <label for="exampleInputEmail1"><span class="label">Country*</span></label><br>
+                                <label for="exampleInputEmail1"><span class="label">Country</span></label><br>
                                 <select name="country" class="custom-select form-control user">
                                    <?php
                                     $query="SELECT * FROM countries WHERE ID='{$country}'";
@@ -301,11 +369,12 @@ if(isset($_POST['save'])){
                                     while($row=mysqli_fetch_assoc($result)){
                                         $country1=$row['Name'];
                                         $id_coun=$row['ID'];
+                                        
                                     }
                                     
                                     
                                     ?>
-                                     <?php echo "<option value='{$id_coun}'>$country1</option>"; ?>
+                                    <?php echo "<option value='{$id_coun}'>$country1</option>"; ?>
                                     
                                     
                                     <?php
@@ -325,7 +394,6 @@ if(isset($_POST['save'])){
                                     
                                     ?>
                                 </select>
-                                
                             </div>
 <!--                        </form>-->
                     </div>
@@ -387,25 +455,56 @@ if(isset($_POST['save'])){
                             <h1 class="user-heading">Selling Information</h1>
                             <div class="form-group-left">
                                 <div class="addnote-radio">
+                                   
                                     <label for="exampleInputEmail1"><span class="label">Sell For*</span></label>
-                                    <div class="form-check radio-left">
+                                    
+                                       <?php
+                                    
+                                        if($sell_type=='0')
+                                        {
+                                           echo '<div class="form-check radio-left">
+                                       
                                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="free" checked>
+                                            onclick="fun()" value="0" checked>
                                         <label class="form-check-label label1" for="gridRadios1">
                                             Free
                                         </label>
-                                    </div>
-                                    <div class="form-check radio-right">
+                                    </div>';
+                                            echo '<div class="form-check radio-right">
                                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="paid" checked>
+                                          onclick="fun1()"  value="1">
                                         <label class="form-check-label label1" for="gridRadios1">
                                             Paid
                                         </label>
-                                    </div>
+                                        </div>'; 
+                                         
+                                        }
+                                        else{
+                                            echo '<div class="form-check radio-left">
+                                       
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                            onclick="fun()" value="0" >
+                                        <label class="form-check-label label1" for="gridRadios1">
+                                            Free
+                                        </label>
+                                    </div>';
+                                           echo '<div class="form-check radio-right">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                          onclick="fun1()"  value="1" checked>
+                                        <label class="form-check-label label1" for="gridRadios1">
+                                            Paid
+                                        </label>
+                                        </div>'; 
+                                        }
+                                        
+                                        ?>
+                                        
+                                    
                                 </div>
+                                
                                 <label for="exampleInputEmail1" class="sell-price-label"><span class="label">Sell
                                         Price*</span></label>
-                                <input name="sell_price" type="text" class="form-control user sell-price" id="exampleInputEmail1"
+                                <input name="sell_price" type="text" class="form-control user sell-price" id="price_radio"
                                      value="<?php  echo $price; ?>" aria-describedby="emailHelp" placeholder="Enter your price">
                             </div>
 <!--                        </form>-->
