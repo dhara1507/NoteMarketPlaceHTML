@@ -1,7 +1,7 @@
 <?php
 include "includes/db.php";
 //include 'download.php';
-session_start();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -37,6 +37,10 @@ session_start();
     <script src="js/jquery.min.js.js"></script>
 </head>
 <?php
+    
+    include "includes/header.php";    
+    ?>
+<?php
                     $id=$_SESSION['id'];
                     $query="SELECT * FROM userprofile WHERE UserID='{$id}'";
                     $result=mysqli_query($conn,$query);
@@ -47,10 +51,7 @@ session_start();
                     ?>
 <body>
     
-    <?php
     
-    include "includes/header.php";    
-    ?>
     <?php
     if(isset($_POST['download'])){
         $file=$_POST['up_note'];
@@ -223,86 +224,7 @@ session_start();
                     </div>
                 </div>";
     echo "</section></div></div>";
-//    if(isset($_POST['download'])){
-//        
-//
-//        $email=$_SESSION['email1'];
-//        $id1=$_SESSION['id'];
-//        $query="SELECT  * FROM users WHERE EmailID='{$email}'";
-//        $result=mysqli_query($conn,$query);
-//        $count=mysqli_num_rows($result);
-//        while($row=mysqli_fetch_assoc($result)){
-//            $name=$row['FirstName'];
-//            $buyer=$row['EmailID'];
-//        }
-//        if($count==0)
-//        {
-//            echo "<script>alert('Please SignIn/Login to download this note')</script>";
-//            echo "<script>window.location.href='login.php'</script>";
-//        }
-//        $query="SELECT * FROM sellernotes LEFT JOIN users ON sellernotes.SellerID=users.ID WHERE Sellernotes.ID='{$id}'";
-//        $result=mysqli_query($conn,$query);
-//        while($row=mysqli_fetch_assoc($result)){
-//            $type=$row['IsPaid'];
-//            $price=$row['SellingPrice'];
-//            $seller=$row['FirstName'];
-//            $seller_email=$row['EmailID'];
-//            $seller_id=$row['SellerID'];
-//        }
-//        
-//        if($type=='1'){
-//            echo "<script>alert('are You sure U Want to Download this download this paid note.')</script>";
-//            $dt=date('Y/m/d H:i:s');
-//            $query1="SELECT * FROM sellernotesattachements WHERE NoteID='{$id}'";
-//            $result1=mysqli_query($conn,$query1);
-//            while($row=mysqli_fetch_assoc($result1)){
-//                $path=$row['FilePath'];
-//            }
-//            if($seller_id==$id1){
-//                
-//            }
-//            else{
-//            $query="INSERT INTO downloads(ID,NoteID,Seller,Downloader,IsSellerHasAllowedDownload,AttachementPath,IsAttachmentDownloaded,AttachmentDownlodedDate,IsPaid,PurchasedPrice,NoteTitle,NoteCategory,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,IsActive ) VALUES('','{$id}','{$seller_id}','{$id1}',0,'{$path}',0,'{$dt}','1','{$price}','{$title}','{$category}','','','','','')";
-//            $result=mysqli_query($conn,$query);
-//        
-//            if(!$result){
-//                die("FAILED".mysqli_error($result));
-//            }
-//            echo "<script type='text/javascript'>
-//                $(document).ready(function(){
-//                $('#exampleModal').modal('show');
-//                });
-//                </script>";
-//               $to=$seller_email;
-//               $subject=$name."  wants to purchase your notes";
-//               $msg="Hello ".$seller.","."\r\n".
-//                   "We wants to inform you that,".$name." wants to purchase your note.Plase see Buyer Request tab and allow accsee to buyer if you have received payment from him"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n".
-//
-//
-//                    "Regards,"."\r\n"
-//                    ."Notes MarketPlace";
-//
-//            
-//                $header="dhara8186@gmail.com";
-//               if(mail($to,$subject,$msg,$header)){
-//                    
-//               }
-//            }
-//        }
-//        else{
-//            $dt=date('Y/m/d H:i:s');
-//            if($seller_id==$id1){
-//                
-//            }
-//            else{
-//            $query="INSERT INTO downloads(ID,NoteID,Seller,Downloader,IsSellerHasAllowedDownload,AttachementPath,IsAttachmentDownloaded,AttachmentDownlodedDate,IsPaid,PurchasedPrice,NoteTitle,NoteCategory,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,IsActive ) VALUES('','{$id}','{$seller_id}','{$id1}',1,'{$up_note}','1','{$dt}','','0','{$title}','{$category}','','','','','')";
-//            $result=mysqli_query($conn,$query);
-//            if(!$result){
-//                die("FAILED".mysqli_error($result));
-//            }
-//            }
-//        }
-//    }
+
     ?>
     <hr>
     <section id="note-details">
