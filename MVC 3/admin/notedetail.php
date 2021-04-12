@@ -46,74 +46,11 @@ session_start();
                     
                     ?>
 <body>
-    <!-- Preloader -->
-<!--
-    <div id="preloader">
-        <div id="status">&nbsp;</div>
-    </div>
--->
-    <!--Header-->
-    <div class="header header-note">
-        <div class="navbar-header">
-            <!-- LOGO-->
-            <a href="home.html">
-                <img src="images/Homepage/darklogo.png" alt="logo" id="logo-header-user">
-            </a>
-            <!--Mobile Menu Open Button-->
-            <span id="mobile-nav-open-btn">&#9776;</span>
-        </div>
-        <div class="header-right header-note-detail">
-            <ul class="nav nav2 navbar-nav pull-right">
-                <li><a href="search.php">Search Note</a></li>
-                <li><a href="dashboard.php">Sell Your Notes</a></li>
-                <li><a href="buyerreq.php">Buyer Requests</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
-                <li>
-                <div class="dropdown dropdown-dash">
-                       <?php $img=''; ?>
-                        <?php if($img){ ?>
-                        <a href="#"><img src="<?php echo $img; ?>" class="img-responsive img-circle img-user img-user-dash"></a>
-                        <?php }else{ ?>
-                    <a href='#'><img src="images/team/default.jpg" class="img-responsive img-circle img-user img-user-dash"></a>
-                        <?php } ?>
-                        <div class="dropdown-content dash-content" style="height:250px">
-                            <a href="Userp.php">My Profile</a>
-                            <a href="mydownload.php">My Download</a>
-                            <a href="mysoldnote.php" class="sold">My Sold Note</a>
-                            <a href="myreject.php">My Rejected Notes</a>
-                            <a href="cp.php">Change Password</a>
-                            <a href="logout.php" class="logout">LOGOUT</a>
-                        </div>
-                    </div>
-                </li>
-               
-                <li>
-                    <form action="logout.php"><input type="submit" class="btn2 btn2-user" value="Logout"></form>
-                </li>
-            </ul>
-        </div>
-        <!--Mobile Menu-->
-        <div id="mobile-nav">
-            <!--Mobile Menu Close Button-->
-            <span id="mobile-nav-close-btn">&times;</span>
-            <div id="mobile-nav-content">
-                <ul class="nav">
-                    <li><a href="search.php">Search Note</a></li>
-                    <li><a href="dashboard.php">Sell Your Notes</a></li>
-                    <li><a href="buyerreq.php">Buyer Requests</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="#"><img src="images/Add-notes/user-img.png"
-                                class="img-responsive img-circle img-user"></a>
-                    </li>
-                    <li>
-                        <form method="post" action="logout.php"><input type="submit" class="btn2 btn2-user btn-search-mobile" value="Logout"></form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    
+    <?php
+    
+    include "includes/header.php";    
+    ?>
     <?php
     if(isset($_POST['download'])){
         $file=$_POST['up_note'];
