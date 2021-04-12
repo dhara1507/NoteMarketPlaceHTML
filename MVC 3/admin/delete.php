@@ -2,12 +2,6 @@
 include "includes/db.php";
 session_start();
 $admin_id=$_SESSION['id'];
-if(isset($_GET['Delete'])){
-        $the_id=$_GET['Delete'];
-        $query="DELETE FROM sellernotesreviews WHERE ID='{$the_id}'";
-        $delete=mysqli_query($conn,$query);
-        header("Location:notesunderreview.php");
-}
 
 if(isset($_GET['change_app'])){
         $id_change=$_GET['change_app'];
