@@ -422,7 +422,7 @@ session_start();
                             echo "</div>";
                             echo "<div class='col-md-8 col-sm-8 col-xs-8'>
                             <h4 class='note-h1'>$fname  $lname</h4>
-                            <a href='delete.php?Delete={$rat_id}'><img style='margin-left:400px;margin-top:-40px;' src='images/images/delete.png'></a>";
+                            <a href='?id={$note_id}&&Delete={$rat_id}'><img style='margin-left:400px;margin-top:-40px;' src='images/images/delete.png'></a>";
                             if($rating==1){
                                 echo "<div class='stars text-left'>
                                 <img src='images/Front_images/images/star.png' class='note-de-star'>
@@ -487,9 +487,15 @@ session_start();
         </div>
         
     </section>
-    
-   
+    <?php
+       if(isset($_GET['Delete'])){
+        $the_id=$_GET['Delete'];
+        $query="DELETE FROM sellernotesreviews WHERE ID='{$the_id}'";
+        $delete=mysqli_query($conn,$query);
+}
+        ?>
     <hr>
+    
 
     <!--Footer-->
     <footer id="footer">
