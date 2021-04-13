@@ -586,17 +586,42 @@ if(isset($_POST['yes'])){
     
     
     
-    <!--Footer-->
+    <?php
+        $query="SELECT * FROM systemconfiguration WHERE KEY1='Facebook url'";
+        $result=mysqli_query($conn,$query);
+        if(!$result){
+            die("fail".mysqli_error($conn));
+        }
+        while($row=mysqli_fetch_assoc($result)){
+            $facebook=$row['Value'];
+        }
+        $query="SELECT * FROM systemconfiguration WHERE KEY1='Twitter'";
+        $result=mysqli_query($conn,$query);
+        while($row=mysqli_fetch_assoc($result)){
+            
+            $twi=$row['Value'];
+           
+        }
+        $query="SELECT * FROM systemconfiguration WHERE KEY1='LinkedIn'";
+        $result=mysqli_query($conn,$query);
+        while($row=mysqli_fetch_assoc($result)){
+            
+            
+            $link=$row['Value'];
+        }
+        
+        
+        
+        ?>
     <footer id="footer">
         <p>
             <span class="footer-p">Copyright &copy; TatvaSoft All rights reserved.</span>
-            <a href="#" class="social-list"><i class="fa fa-facebook"></i></a>
-            <a href="#" class="social-list"><i class="fa fa-twitter"></i></a>
-            <a href="#" class="social-list"><i class="fa fa-linkedin"></i></a>
+            <a href='<?php echo $facebook; ?>' class="social-list"><i class="fa fa-facebook"></i></a>
+            <a href='<?php echo $twi; ?>' class="social-list"><i class="fa fa-twitter"></i></a>
+            <a href='<?php echo $link; ?>' class="social-list"><i class="fa fa-linkedin"></i></a>
         </p>
     </footer>
     <!--Footer Ends-->
-
 
     <!-- jQuery -->
     <script src="js/jquery.min.js.js"></script>
