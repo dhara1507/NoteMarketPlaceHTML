@@ -30,6 +30,29 @@ include "includes/db.php";
 
     <!--Responsive css-->
     <link rel="stylesheet" href="css/responsive.css">
+    <script type="text/javascript">
+        function validate(){
+        
+        var email=document.form.email.value;
+        
+        var atpos=email.indexOf("@");
+        var dtpos=email.lastIndexOf(".");
+        if(!email){
+            alert("All feild is requrired");
+            return false;
+        }
+        
+        if(atpos<1 || dtpos-atpos<2){
+            alert("plese enter valid email id");
+            document.form.email.focus();
+            return false;
+        }
+        
+        else{
+                return true;
+        }
+        }
+    </script>
 </head>
 
 
@@ -86,12 +109,12 @@ include "includes/db.php";
     <section id="ForP">
         <div class="bg-img">
             <img id="logo" src="images/pre-login/top-logo.png" alt="logo" class="center img-responsive logo-fp">
-            <form method="post" action="" class="container-fp">
+            <form method="post" action="" class="container-fp" onsubmit="return(validate());">
                 <h1 id="login-01">Forgot Password?</h1>
                 <p id="para">Enter your email to reset your password</p>
                 <div class="form-group">
                     <label for="exampleInputEmail1"><span id="email1">Email</span></label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Email" value="tatvsoft@gmail.com"><br>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Email"><br>
                     <button type="submit" name="submit" class="btn btn-primary">SUBMIT</button>
                 </div>
             </form>
