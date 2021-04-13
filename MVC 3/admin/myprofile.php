@@ -44,6 +44,11 @@ include "includes/db.php";
                 alert('enter all required fields');
                 return false;
             }
+            if(phone.length>10 || phone.length<10){
+                alert("phone no should be 10 digit only!!");
+                document.form.phone.focus();
+                return false;
+            }
             else{
                 return true;
             }
@@ -158,7 +163,7 @@ include "includes/db.php";
                 <label for="exampleFormControlTextarea1"><span class="label">Profile
                         Picture</span></label>
                 <input type="file" class="form-control user" id="exampleFormControlTextarea1" 
-                    title="upload a picture" style="height:100px;width:650px;" name='img'>
+                    title="upload a picture" style="height:100px;width:650px;" name='img' accept="image/jpeg">
                 
             </div>
         </div>
