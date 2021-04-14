@@ -102,11 +102,21 @@ include "includes/db.php";
         $phn=$_POST['phone'];
         $cc=$_POST['cc'];
         $dt=date('Y-m-d h:i:s');
-        $query_userp="INSERT INTO userprofile(ID,UserID,DOB,Gender,SecondaryEmailAddress,CoutryCode,PhoneNumber,ProfilePicture,AddressLine1,AddressLine2,City,State,ZipCode,Country,University,College,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy) VALUES('','{$id_member}','','7','{$semail}','{$cc}','{$phn}','{$img}','','','','','','','','','{$dt}','','','')";
+        if(!$id_member){
+         $query_userp="INSERT INTO userprofile(ID,UserID,DOB,Gender,SecondaryEmailAddress,CoutryCode,PhoneNumber,ProfilePicture,AddressLine1,AddressLine2,City,State,ZipCode,Country,University,College,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy) VALUES('','{$id_member}','','7','{$semail}','{$cc}','{$phn}','{$img}','','','','','','','','','{$dt}','','','')";
         $result1=mysqli_query($conn,$query_userp);
         if(!$result1){
             die("fail".mysqli_error($conn));
+        }   
         }
+        else{
+            $query_userp="UPDATE userprofile SET SecondaryEmailAddress='{$semail}',CoutryCode='{$cc}',Phonenumber='{$phn}',ProfilePicture='{$img}' WHERE UserID='{$id_member}'";
+            $result2=mysqli_query($conn,$query_userp);
+            if(!$result2){
+                die("fai".mysqli_error($conn));
+            }
+        }
+        
         $query_user="UPDATE users SET FirstName='{$fname}',LastName='{$lname}',EmailID='{$email1}' WHERE ID='{$id_member}'";
         $result2=mysqli_query($conn,$query_user);
         if(!$result2){
