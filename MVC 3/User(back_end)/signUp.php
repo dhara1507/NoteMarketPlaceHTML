@@ -59,6 +59,14 @@ session_start();
             alert("password must be 6 to 24 character");
             return false;
         }
+        if(!/^[a-zA-Z]+$/.test(fname)){
+            alert("Numeric value not allowed in first name");
+            return false;
+        }
+        if(!/^[a-zA-Z]+$/.test(lname)){
+            alert("Numeric value not allowed in last name");
+            return false;
+        }
         else{
                 return true;
         }
@@ -89,11 +97,11 @@ session_start();
            $query="INSERT INTO users (ID,RoleID,FirstName,LastName,EmailID,Password,IsEmailVerified,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,IsActive)
            VALUES('','1','{$firstname}','{$lastname}','{$email}','{$password}','','{$dt}','','','','')";
            $result=mysqli_query($conn,$query);
-           
            if(!$result){
                die("FAILED".mysqli_error($conn));
            }
-           else{
+           else
+           {
                echo '<p id="suc"><i class="fa fa-check-circle"></i>Your account has been successfully created</p>';
                header("Location:emailvari.php");
            }
