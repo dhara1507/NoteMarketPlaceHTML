@@ -70,6 +70,18 @@ session_start();
                 document.form.phone.focus();
                 return false;
             }
+            if(!/^[a-zA-Z]+$/.test(fname)){
+                alert("Numeric value not allowed in first name");
+                return false;
+            }
+            if(!/^[a-zA-Z]+$/.test(lname)){
+                alert("Numeric value not allowed in last name");
+                return false;
+            }
+            if(!/^\d{10}$/.test(phone)){
+                alert("enter valid phone no");
+                return false;
+            }
             else{
                 return true;
             }
