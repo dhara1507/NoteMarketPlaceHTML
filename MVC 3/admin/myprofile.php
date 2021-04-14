@@ -39,6 +39,7 @@ include "includes/db.php";
             var email1=document.form.email1.value;
             var phone=document.form.phone.value;
             var img=document.form.img.value;
+            
             if(!fname || !lname || !email || !phone || !email1 || !img){
                 
                 alert('enter all required fields');
@@ -47,6 +48,18 @@ include "includes/db.php";
             if(phone.length>10 || phone.length<10){
                 alert("phone no should be 10 digit only!!");
                 document.form.phone.focus();
+                return false;
+            }
+            if(!/^\d{10}$/.test(phone)){
+                alert("enter valid phone no");
+                return false;
+            }
+            if(!/^[a-zA-Z]+$/.test(fname)){
+                alert("Numeric value not allowed in first name");
+                return false;
+            }
+            if(!/^[a-zA-Z]+$/.test(lname)){
+                alert("Numeric value not allowed in last name");
                 return false;
             }
             else{
