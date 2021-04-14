@@ -51,7 +51,13 @@ session_start();
         if(atpos<1 || dtpos-atpos<2){
             alert("plese enter valid email id");
             return false;
-        }else{
+        }
+        if(!/^[a-zA-Z]+$/.test(fullname)){
+            alert("Numeric value not allowed in full name");
+            return false;
+        }
+        
+        else{
             return true;
         }   
         }
@@ -351,7 +357,6 @@ echo '<!-- Preloader -->
             <a href='<?php echo $link; ?>' class="social-list"><i class="fa fa-linkedin"></i></a>
         </p>
     </footer>
-    <!--Footer Ends-->
 
 
     <!-- jQuery -->
