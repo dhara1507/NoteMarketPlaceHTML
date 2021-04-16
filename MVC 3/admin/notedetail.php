@@ -2,7 +2,7 @@
 include "includes/db.php";
 //include 'download.php';
 session_start();
-
+ob_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,13 +56,17 @@ session_start();
                 <li><a href="../User(back_end)/contact.php">Contact Us</a></li>
                 <li>
                 <div class="dropdown dropdown-dash">
-                       <?php $img=''; ?>
-                        <?php if($img){ ?>
-                        <a href="#"><img src="<?php echo $img; ?>" class="img-responsive img-circle img-user img-user-dash"></a>
-                        <?php }else{ ?>
-                    <a href='#'><img src="images/team/default.jpg" class="img-responsive img-circle img-user img-user-dash"></a>
-                        <?php } ?>
-                        <div class="dropdown-content dash-content" style="height:250px">
+                     
+                      <?php
+                    $img='';
+                        if($img){
+                            echo "<a href='#'><img src=$img class='img-responsive img-circle img-user img-user-dash'></a>";
+                        }
+                        else{
+                            echo "<a href='#'><img src='images/team/default.jpg' class='img-responsive img-circle img-user img-user-dash'></a>";
+                        }
+                       ?>
+                        <div class="dropdown-content dash-content" style="height:250px;">
                             <a href="../User(back_end)/Userp.php">My Profile</a>
                             <a href="../User(back_end)/mydownload.php">My Download</a>
                             <a href="../User(back_end)/mysoldnote.php" class="sold">My Sold Note</a>
@@ -106,7 +110,6 @@ session_start();
                     while($row=mysqli_fetch_assoc($result)){
                         $img=$row['ProfilePicture'];
                     }
-                    
                     ?>
 <body>
     <?php
