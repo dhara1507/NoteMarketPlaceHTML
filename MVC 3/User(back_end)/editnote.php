@@ -1,6 +1,7 @@
 <?php
 include "includes/db.php";
 session_start();
+error_reporting(0);
 ?>
 <!doctype html>
 <html lang="en">
@@ -77,7 +78,12 @@ while($row=mysqli_fetch_assoc($select_note)){
     $price=$row['SellingPrice'];
     $sell_type=$row['IsPaid'];
     $note_preview=$row['NotesPreview'];
-    
+
+}
+$query_select="SELECT * FROM sellernotesattachements WHERE NoteID='{$the_note}'";
+$result_select=mysqli_query($conn,$query_select);
+while($row=mysqli_fetch_assoc($result_select)){
+    $up_note=$row['FilePath'];
 }
     
 if(isset($_POST['save'])){
@@ -85,22 +91,7 @@ if(isset($_POST['save'])){
                 $title=$_POST['title'];
                 $type=$_POST['type'];
                 
-                    $target_dir="../member/$id_note/$the_note/";
-                    mkdir($target_dir);
-                    $file1=basename($_FILES['prof_pic']['name']);
-                    $new_note=$target_dir."DP_".time();
-                    $p1=rename($file1,$new_note);
-                    move_uploaded_file($_FILES['prof_pic']['tmp_name'],$new_note);
-    
-               
-                
-    
                 $category=$_POST['category'];
-                
-                $target_dir="../member/$id_note/$the_note/Attachments/";
-                mkdir($target_dir);
-                $target_file_up=$target_dir.basename($_FILES['up_note']['name']);
-                move_uploaded_file($_FILES['up_note']['tmp_name'],$target_file_up);
                 
                 $page=$_POST['pages'];
                 $desc=$_POST['description'];
@@ -112,13 +103,44 @@ if(isset($_POST['save'])){
                 $sell_type=$_POST['gridRadios'];
                 $price=$_POST['sell_price'];
                 
+                $p=$_FILES['up_note']['name'];
+                if($p){
+                $target_dir="../member/$id_note/$the_note/Attachments/";
+                mkdir($target_dir);
+                $target_file_up=$target_dir.basename($_FILES['up_note']['name']);
+                move_uploaded_file($_FILES['up_note']['tmp_name'],$target_file_up);
+                }
+                else{
+                    $target_file_up=$up_note;
+                }
+                
+                $pic=$_FILES['prof_pic']['name'];
+                if($pic){
                 $target_dir="../member/$id_note/$the_note/";
                 mkdir($target_dir);
-                $file=basename($_FILES['note_preview']['name']);
+                $file1=basename($_FILES['prof_pic']['name']);
+                $new_note=$target_dir."DP_".time();
+                $p1=rename($file1,$new_note);
+                move_uploaded_file($_FILES['prof_pic']['tmp_name'],$new_note);
+                }
+                else{
+                    $new_note=$note_pic;
+                }
+                
+                $pre=$_FILES['note_preview']['name'];
+                if($pre){
+                $target_dir="../member/$id_note/$the_note/";
+                mkdir($target_dir);
+                $file1=basename($_FILES['note_preview']['name']);
                 $new_pre=$target_dir."preview_".time();
-                $p=rename($file,$new_pre);
+                $p1=rename($file1,$new_pre);
                 move_uploaded_file($_FILES['note_preview']['tmp_name'],$new_pre);
-    
+                }
+                else{
+                    $new_pre=$note_preview;
+                }
+
+                
                 
                 
             if($sell_type=='1'){
@@ -143,18 +165,30 @@ if(isset($_POST['yes'])){
                 $title=$_POST['title'];
                 $type=$_POST['type'];
                 
-                 $target_dir="../member/$id_note/$the_note/";
-                    mkdir($target_dir);
-                    $file1=basename($_FILES['prof_pic']['name']);
-                    $new_note=$target_dir."DP_".time();
-                    $p1=rename($file1,$new_note);
-                    move_uploaded_file($_FILES['prof_pic']['tmp_name'],$new_note);
+                 $pic=$_FILES['prof_pic']['name'];
+                if($pic){
+                $target_dir="../member/$id_note/$the_note/";
+                mkdir($target_dir);
+                $file1=basename($_FILES['prof_pic']['name']);
+                $new_note=$target_dir."DP_".time();
+                $p1=rename($file1,$new_note);
+                move_uploaded_file($_FILES['prof_pic']['tmp_name'],$new_note);
+                }
+                else{
+                    $new_note=$note_pic;
+                }
                
     
-                $target_dir="../member/$id/$id_data/Attachments/";
+                $p=$_FILES['up_note']['name'];
+                if($p){
+                $target_dir="../member/$id_note/$the_note/Attachments/";
                 mkdir($target_dir);
                 $target_file_up=$target_dir.basename($_FILES['up_note']['name']);
                 move_uploaded_file($_FILES['up_note']['tmp_name'],$target_file_up);
+                }
+                else{
+                    $target_file_up=$up_note;
+                }
                 
                 $page=$_POST['pages'];
                 $desc=$_POST['description'];
@@ -166,12 +200,18 @@ if(isset($_POST['yes'])){
                 $sell_type=$_POST['gridRadios'];
                 $price=$_POST['sell_price'];
     
+                $pre=$_FILES['note_preview']['name'];
+                if($pre){
                 $target_dir="../member/$id_note/$the_note/";
                 mkdir($target_dir);
-                $file=basename($_FILES['note_preview']['name']);
+                $file1=basename($_FILES['note_preview']['name']);
                 $new_pre=$target_dir."preview_".time();
-                $p=rename($file,$new_pre);
+                $p1=rename($file1,$new_pre);
                 move_uploaded_file($_FILES['note_preview']['tmp_name'],$new_pre);
+                }
+                else{
+                    $new_pre=$note_preview;
+                }
                 
                 $id=$_SESSION['id'];
                 $action_by=$_SESSION['firstname'];
@@ -406,7 +446,7 @@ if(isset($_POST['yes'])){
                                 <label for="exampleFormControlTextarea1"><span class="label up-note-label">Upload
                                         Notes*</span></label>
                                     
-                                        <input type="file" name="up_note" class="form-control user up-note" accept=".pdf" id="exampleFormControlTextarea2" title="upload a note" style="height:100px;width:700px;">
+                                        <input type="file" name="up_note" class="form-control user up-note" value="<?php echo $up_note; ?>" id="exampleFormControlTextarea2" title="upload a note" style="height:100px;width:700px;" accept="application/pdf">
 
                             </div>
                             <div class="form-group-right">
@@ -598,7 +638,7 @@ if(isset($_POST['yes'])){
 <!--                        <form method="" action="" class="container-right">-->
                             <div class="form-group-right addnote-desc">
                                 <label for="exampleFormControlTextarea1"><span class="label">Note Preview*</span></label>
-                                <input type="file" name="note_preview" class="form-control user up-note" id="exampleFormControlTextarea2" title="upload a picture" style="height:170px;width:700px;">
+                                <input type="file" name="note_preview" class="form-control user up-note" id="exampleFormControlTextarea2" title="upload a picture" style="height:170px;width:700px;" value="<?php echo $note_preview; ?>" accept="application/pdf">
                             </div>
 <!--                        </form>-->
                     </div>
