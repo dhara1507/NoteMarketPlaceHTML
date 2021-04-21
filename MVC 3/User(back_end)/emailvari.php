@@ -47,7 +47,7 @@ session_start();
        $subject="Note Marketplace-Email Verification";
        $msg="Hello $member,
             Thank You for Signing up with us,Please click on below link to verify your email address and to do login"."\r\n".
-            "Click below link to verify email address http://localhost/note/user/active.php?id=$id".
+            "Click below link to verify email address http://localhost/MVC 3/User(back_end)/active.php?id=$id".
            "\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n"."\r\n".
             "Regards,"."\r\n".
             "Notes Market Place";
